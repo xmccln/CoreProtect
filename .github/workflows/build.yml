@@ -26,3 +26,13 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build
         run: mvn -B verify
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+         name: my-app-build-${{ github.run_id }}
+         path: target/*.jar
+         if-no-files-found: error
+         retention-days: 7
+         compression-level: 6
+         overwrite: true
+         include-hidden-files: false
